@@ -12,3 +12,29 @@ Tài liệu:
 Nộp bài:
 - https://lms-hcm.fpt.edu.vn/login/index.php
 - Enrolment key: vlmjCQA:vIU50P.4T:sR
+
+Tools:
+1.	Về tool lập trình: 
++ IDE tool là Netbeans 13
+2.	JDK: 8
+3. https://sourceforge.net/projects/staruml/files/staruml/5.0/
+4.  Ultraviewer (nhớ uninstall trước kỳ thi PE).
+
+Đánh giá điểm:
+- Xem tập tin Excel.
+- Cộng điểm:
++ Coursera: Java Programming and Software Engineering Fundamentals Specialization - Coursera certificate  
++ Get certificate và deposit vào projects (cộng điểm vào 01 project +200 LOC)
+
+Quy định điểm danh:
+- Sinh viên được vắng tối đa 6 slot (3 buổi học) theo quy định.
+- Điểm danh đầu giờ (sau khi bắt đầu 5 phút).
+
+Zoom:
+https://uw-edu-pl.zoom.us/meetings/92776733624/invitations?signature=7F58QealKtVP4AnLbIJ4lcgxlFrC1nXWe0XCbkoQF5c
+
+Videos:
++ Slot 1
++ Slot 2
++ Slot 3
+....
