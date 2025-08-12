@@ -38,3 +38,11 @@ Videos:
 + Slot 2
 + Slot 3
 ....
+
++ Buổi 1: đọc và phân tích đề
++ Buổi 2,3,4: Hướng dẫn chi tiết Project 1
++ Buổi 5,6: Chấm điểm Project 1
++ Buổi 5->9: Tự làm Project 2
++ Buổi 10, 11: Chấm điểm Project 2
++ Buổi 10->13: Tự làm Project 3
++ Buổi 14,15: Chấm điểm Project 3
