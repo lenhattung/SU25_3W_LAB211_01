@@ -1,4 +1,7 @@
+package business;
 
+
+import models.Order;
 import java.util.ArrayList;
 
 /*
@@ -10,18 +13,18 @@ import java.util.ArrayList;
  *
  * @author tungi
  */
-public class Customers extends ArrayList<Customer> implements Workable<Customer>{
+public class Orders extends ArrayList<Order> implements Workable<Order>{
 
     @Override
-    public void addNew(Customer t) {
+    public void addNew(Order t) {
     }
 
     @Override
-    public void update(Customer t) {
+    public void update(Order t) {
     }
 
     @Override
-    public Customer search(String s) {
+    public Order search(String s) {
         return null;
     }
 
