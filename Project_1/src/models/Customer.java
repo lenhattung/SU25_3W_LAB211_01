@@ -78,16 +78,9 @@ public class Customer implements Serializable{
             return false;
         }
         final Customer other = (Customer) obj;
-        if (!Objects.equals(this.customerCode, other.customerCode)) {
+        if (!this.customerCode.equalsIgnoreCase(other.customerCode)) {
             return false;
         }
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        if (!Objects.equals(this.phoneNumber, other.phoneNumber)) {
-            return false;
-        }
-        return Objects.equals(this.email, other.email);
+        return true;
     }
-    
 }

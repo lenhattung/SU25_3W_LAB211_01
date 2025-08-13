@@ -33,15 +33,16 @@ public class Inputter {
         return result;
     }
 
-    public Customer inputCustomer() {
+    public Customer inputCustomer(boolean isUpdated) {
         Customer customer = new Customer();
-        
+
         // Input customerCode
         String message = "Enter Customer code\n (A unique 5-character string. The first character is \"C\", \"G\"or \"K\", followed by 4 digits.)";
         String errorMsg = "Customer code cannot be empty! Customer code must start with C, G, K, followed by 4 digits!";
         String regex = Acceptable.customerCodeRegex;
-        customer.setCustomerCode(input(message, errorMsg, regex));
-
+        if (!isUpdated) {
+            customer.setCustomerCode(input(message, errorMsg, regex));
+        }
         // Input name
         message = "Input name (A non-empty string between 2 and 25 characters long): ";
         errorMsg = "Error: Name cannot be empty. Name must be between 2 and 25 characters.";
@@ -63,10 +64,9 @@ public class Inputter {
         return customer;
     }
 
-    public static void main(String[] args) {
-        Inputter inputter = new Inputter();
-        Customer c = inputter.inputCustomer();
-        System.out.println(c);
-    }
-
+//    public static void main(String[] args) {
+//        Inputter inputter = new Inputter();
+//        Customer c = inputter.inputCustomer();
+//        System.out.println(c);
+//    }
 }

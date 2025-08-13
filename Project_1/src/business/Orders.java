@@ -1,6 +1,5 @@
 package business;
 
-
 import models.Order;
 import java.util.ArrayList;
 
@@ -8,12 +7,18 @@ import java.util.ArrayList;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 /**
  *
  * @author tungi
  */
-public class Orders extends ArrayList<Order> implements Workable<Order>{
+public class Orders extends ArrayList<Order> implements Workable<Order> {
+
+    private String pathFile;
+    private boolean saved;
+
+    public Orders(String pathFile) {
+        this.pathFile = pathFile;
+    }
 
     @Override
     public void addNew(Order t) {
@@ -24,12 +29,12 @@ public class Orders extends ArrayList<Order> implements Workable<Order>{
     }
 
     @Override
-    public Order search(String s) {
+    public Order searchById(String s) {
         return null;
     }
 
     @Override
     public void showAll() {
     }
-    
+
 }

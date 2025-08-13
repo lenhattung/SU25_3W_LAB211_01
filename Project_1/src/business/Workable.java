@@ -12,6 +12,6 @@ package business;
 public interface Workable<T> {
     public void addNew(T t);
     public void update(T t);
-    public T search(String s);
+    public T searchById(String id);
     public void showAll();
 }
