@@ -34,9 +34,9 @@ Zoom:
 https://uw-edu-pl.zoom.us/meetings/92776733624/invitations?signature=7F58QealKtVP4AnLbIJ4lcgxlFrC1nXWe0XCbkoQF5c
 
 Videos:
-+ Slot 1
-+ Slot 2
-+ Slot 3
++ Buổi 1
++ Buổi 2: https://youtu.be/bsKiBHowNus
++ Buổi 3: https://youtu.be/l7QK0l-cSuw
 ....
 
 + Buổi 1: đọc và phân tích đề
