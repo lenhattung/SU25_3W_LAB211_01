@@ -113,11 +113,11 @@ public class Order implements Serializable {
         c.display();
         System.out.println("-----------------------------");
         SetMenu s = setMenus.searchById(this.getMenuId());
-        System.out.format("%-20s:%s\n", "Code of SetMenu:", this.getMenuId());
-        System.out.format("%-20s:%s\n", "Set menu name:", s.getMenuName());
-        System.out.format("%-20s:%s\n", "Event date:", this.getEventDate());
-        System.out.format("%-20s:%s\n", "Number of tables:", this.getNumberOfTables());
-        System.out.format("%-20s:%s\n", "Price:", s.getPrice());
+        System.out.format("%-20s: %s\n", "Code of SetMenu", this.getMenuId());
+        System.out.format("%-20s: %s\n", "Set menu name", s.getMenuName());
+        System.out.format("%-20s: %s\n", "Event date", this.getEventDate());
+        System.out.format("%-20s: %s\n", "Number of tables", this.getNumberOfTables());
+        System.out.format("%-20s: %s\n", "Price", s.getPrice());
         System.out.println("-----------------------------");
         System.out.format("%-15s:%s\n", "Total cost: ", this.getNumberOfTables() * s.getPrice() + " VND");
     }
