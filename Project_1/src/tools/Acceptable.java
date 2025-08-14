@@ -19,6 +19,7 @@ public interface Acceptable {
     // Vietnamobile: 052, 056, 058 và 092
     public static String phoneRegex = "^(03[2-9]|086|09[6-8]|090|093|089|070|079|077|076|078|081|082|083|084|085|088|091|094|052|056|058|092)\\d{7}$";
     public static String positive_integer = "^[1-9]\\d*";
+    public static String anything = ".*";
     
     public static boolean isValid(String data, String regex){
         return data.matches(regex);

@@ -1,6 +1,7 @@
 package models;
 
-
+import business.Customers;
+import business.SetMenus;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -13,7 +14,7 @@ import java.util.Objects;
  *
  * @author tungi
  */
-public class Order implements Serializable{
+public class Order implements Serializable {
 
     private String orderId;
     private String customerCode;
@@ -77,7 +78,6 @@ public class Order implements Serializable{
         return "Order{" + "orderId=" + orderId + ", customerCode=" + customerCode + ", menuId=" + menuId + ", numberOfTables=" + numberOfTables + ", eventDate=" + eventDate + '}';
     }
 
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -105,4 +105,20 @@ public class Order implements Serializable{
         return Objects.equals(this.eventDate, other.eventDate);
     }
 
+    public void display(Customers customers, SetMenus setMenus) {
+        System.out.println("-----------------------------");
+        System.out.println("Customer order information [Order Id: " + this.getOrderId() + "]");
+        System.out.println("-----------------------------");
+        Customer c = customers.searchById(this.getCustomerCode());
+        c.display();
+        System.out.println("-----------------------------");
+        SetMenu s = setMenus.searchById(this.getMenuId());
+        System.out.format("%-20s:%s\n", "Code of SetMenu:", this.getMenuId());
+        System.out.format("%-20s:%s\n", "Set menu name:", s.getMenuName());
+        System.out.format("%-20s:%s\n", "Event date:", this.getEventDate());
+        System.out.format("%-20s:%s\n", "Number of tables:", this.getNumberOfTables());
+        System.out.format("%-20s:%s\n", "Price:", s.getPrice());
+        System.out.println("-----------------------------");
+        System.out.format("%-15s:%s\n", "Total cost: ", this.getNumberOfTables() * s.getPrice() + " VND");
+    }
 }

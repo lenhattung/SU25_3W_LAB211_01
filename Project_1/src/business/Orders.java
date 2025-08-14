@@ -22,6 +22,11 @@ public class Orders extends ArrayList<Order> implements Workable<Order> {
 
     @Override
     public void addNew(Order t) {
+        if(isDupplicated(t)){
+            System.out.println("Dupplicate data!");
+        }else{
+            this.add(t);
+        }
     }
 
     @Override
@@ -37,4 +42,15 @@ public class Orders extends ArrayList<Order> implements Workable<Order> {
     public void showAll() {
     }
 
+    public boolean isDupplicated(Order order) {
+        for (Order o : this) {
+            if (o.getCustomerCode().equals(order.getCustomerCode())
+                    && o.getMenuId().equals(order.getMenuId())
+                    && o.getEventDate().equals(order.getEventDate())) 
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

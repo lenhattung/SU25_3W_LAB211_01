@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 import models.Customer;
+import models.Order;
 import tools.Inputter;
 
 /**
@@ -125,6 +126,16 @@ public class Main {
         setMenus.showAll();
     }
 
+    private static void handleOrderPlacement() {
+        Order o = inputter.inputOrder(customers, setMenus, orders);
+        if (orders.isDupplicated(o)) {
+            System.out.println("Dupplicate data!");
+        } else {
+            orders.addNew(o);
+            o.display(customers, setMenus);
+        }
+    }
+
     private static void processMenuChoice(int testCase) {
         switch (testCase) {
             case REGISTER_CUSTOMERS:
@@ -140,7 +151,7 @@ public class Main {
                 handleMenuDisplay();
                 break;
             case PLACE_ORDER:
-                //handleOrderPlacement();
+                handleOrderPlacement();
                 break;
             case UPDATE_ORDER:
                 // handleOrderUpdating();

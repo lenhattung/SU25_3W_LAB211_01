@@ -97,4 +97,11 @@ public class SetMenus extends HashMap<String, SetMenu> {
             }
         }
     }
+    public SetMenu searchById(String id){
+        return this.get(id);
+    }
+    
+    public boolean contains(String id){
+        return this.containsKey(id);
+    }
 }

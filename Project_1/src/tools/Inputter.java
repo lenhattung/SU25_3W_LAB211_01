@@ -4,8 +4,15 @@
  */
 package tools;
 
+import business.Customers;
+import business.Orders;
+import business.SetMenus;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 import models.Customer;
+import models.Order;
+import models.SetMenu;
 
 /**
  *
@@ -64,9 +71,75 @@ public class Inputter {
         return customer;
     }
 
-//    public static void main(String[] args) {
-//        Inputter inputter = new Inputter();
-//        Customer c = inputter.inputCustomer();
-//        System.out.println(c);
-//    }
+    public Order inputOrder(Customers customers, SetMenus setMenus, Orders orders) {
+        // Input customerCode
+        String customerCode = "";
+        boolean reInput = false;
+        do {
+            String message = "Enter Customer code\n (A unique 5-character string. The first character is \"C\", \"G\"or \"K\", followed by 4 digits.)";
+            String errorMsg = "Customer code cannot be empty! Customer code must start with C, G, K, followed by 4 digits!";
+            String regex = Acceptable.customerCodeRegex;
+            customerCode = input(message, errorMsg, regex);
+            reInput = (customers.searchById(customerCode) == null);
+            if (reInput) {
+                System.out.println("Customer is not in the list of Customers. Please re input!");
+            }
+        } while (reInput);
+
+        // Input SetMenu
+        String setMenuId = "";
+        SetMenu setMenu = null;
+        reInput = false;
+        do {
+            String message = "Enter SetMenu Id";
+            String errorMsg = "SetMenu is invalid!";
+            String regex = Acceptable.anything;
+            setMenuId = input(message, errorMsg, regex);
+            setMenu = setMenus.searchById(setMenuId);
+            reInput = (setMenu == null);
+            if (reInput) {
+                System.out.println("SetMenu is not in the list of SetMenus. Please re input!");
+            }
+        } while (reInput);
+
+        // ---- 
+        int numberOfTables = 0;
+        String msg = "Enter number of tables:";
+        String errorMsg = "Number of tables must be greater than zero!";
+        String regex = Acceptable.positive_integer;
+        numberOfTables = Integer.parseInt(input(msg, errorMsg, regex).toUpperCase());
+
+        
+         // ---
+        Date eventDate = null;
+        boolean checkEventDate = false;
+        do {
+            try {
+                System.out.println("Enter preferred event date:");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                String inputDate = scanner.nextLine().trim();
+                eventDate = sdf.parse(inputDate);
+                Date today = new Date();
+                if (eventDate.after(today)) {
+                    checkEventDate = true;
+                } else {
+                    System.out.println("Error: Event date must be in the future.");
+                }
+            } catch (Exception e) {
+            }
+        } while (!checkEventDate);
+        
+        // Tao don hang moi
+        Order order = new Order(generateOrderId(), customerCode, setMenuId, numberOfTables, eventDate);
+        
+        return order;
+    }
+    
+    public String generateOrderId(){
+        Date date = new Date();
+        //return ""+(date.getYear()+1900)+(date.getMonth()+1)+(date.getDate())+(date.getHours())+(date.getMinutes())+(date.getSeconds());
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        return formatter.format(date);
+    }
+
 }
