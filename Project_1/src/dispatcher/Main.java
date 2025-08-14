@@ -9,6 +9,7 @@ import business.Orders;
 import business.SetMenus;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 import models.Customer;
 import tools.Inputter;
 
@@ -111,12 +112,17 @@ public class Main {
         String name = "";
         System.out.println("Enter the name or partial name of customers");
         name = scanner.nextLine();
-        List<Customer> list = customers.filterByName(name);
-        if(list.size()==0){
+        Set<Customer> set = customers.filterByName(name);
+        if (set.size() == 0) {
             System.out.println("No one matches the search criteria!");
-        }else{
-            customers.show(list);
+        } else {
+            customers.show(set);
         }
+    }
+
+    private static void handleMenuDisplay() {
+        setMenus.readFromFile();
+        setMenus.showAll();
     }
 
     private static void processMenuChoice(int testCase) {
@@ -131,7 +137,7 @@ public class Main {
                 handleCustomerSearch();
                 break;
             case DISPLAY_MENU:
-                //handleMenuDisplay();
+                handleMenuDisplay();
                 break;
             case PLACE_ORDER:
                 //handleOrderPlacement();

@@ -2,7 +2,9 @@ package business;
 
 import models.Customer;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -12,7 +14,7 @@ import java.util.List;
  *
  * @author tungi
  */
-public class Customers extends ArrayList<Customer> implements Workable<Customer> {
+public class Customers extends HashSet<Customer> implements Workable<Customer> {
 
     private String pathFile;
     private boolean saved;
@@ -53,7 +55,7 @@ public class Customers extends ArrayList<Customer> implements Workable<Customer>
         return result;
     }
 
-    public void show(List<Customer> list) {
+    public void show(Set<Customer> list) {
         System.out.println("-------------------------------------------------------------");
         System.out.format("%-6s | %-25s | %-11s | %-20s%n", "Code", "Customer Name", "Phone", "Email");
         System.out.println("-------------------------------------------------------------");
@@ -68,8 +70,8 @@ public class Customers extends ArrayList<Customer> implements Workable<Customer>
         show(this);
     }
 
-    public List<Customer> filterByName(String name) {
-        List<Customer> result = new ArrayList<Customer>();
+    public Set<Customer> filterByName(String name) {
+        Set<Customer> result = new HashSet<Customer>();
         for (Customer c : this) {
             if (c.getName().contains(name)) {
                 result.add(c);
