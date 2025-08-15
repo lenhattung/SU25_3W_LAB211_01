@@ -72,95 +72,113 @@ public class Inputter {
     }
 
     public Order inputOrder(boolean isUpdated, Customers customers, SetMenus setMenus, Orders orders) {
+        // Lấy thông tin order cũ nếu đang update
+        Order existingOrder = null;
         String orderId = generateOrderId();
-        boolean reInput = false;
-        Order oTemp = null;
+
         if (isUpdated) {
-            String message = "Enter Order Id: ";
-            String errorMsg = "Order Id is invalid!";
-            String regex = Acceptable.anything;
-            orderId = input(message, errorMsg, regex);
-            oTemp = orders.searchById(orderId);
-            if (oTemp == null) {
+            orderId = input("Enter Order Id: ", "Order Id is invalid!", Acceptable.anything);
+            existingOrder = orders.searchById(orderId);
+            if (existingOrder == null) {
                 System.out.println("This order does not exist!");
                 return null;
             }
         }
 
-        String customerCode = "";
-        if (isUpdated) {
-            customerCode = oTemp.getCustomerCode();
-        } else {
-            // Input customerCode
-            reInput = false;
+        // Xử lý Customer Code
+        String customerCode = isUpdated ? existingOrder.getCustomerCode() : "";
+        if (!isUpdated) {
             do {
                 String message = "Enter Customer code\n (A unique 5-character string. The first character is \"C\", \"G\"or \"K\", followed by 4 digits.)";
                 String errorMsg = "Customer code cannot be empty! Customer code must start with C, G, K, followed by 4 digits!";
-                String regex = Acceptable.customerCodeRegex;
-                customerCode = input(message, errorMsg, regex);
-                reInput = (customers.searchById(customerCode) == null);
-                if (reInput) {
+                customerCode = input(message, errorMsg, Acceptable.customerCodeRegex);
+
+                if (customers.searchById(customerCode) == null) {
                     System.out.println("Customer is not in the list of Customers. Please re input!");
                 }
-            } while (reInput);
+            } while (customers.searchById(customerCode) == null);
         }
 
-        // Input SetMenu
+        // Xử lý SetMenu ID
         String setMenuId = "";
-        SetMenu setMenu = null;
-        reInput = false;
+        String setMenuMessage = isUpdated
+                ? "Enter SetMenu Id (Press Enter to keep current: " + existingOrder.getMenuId() + "):"
+                : "Enter SetMenu Id:";
         do {
-            String message = "Enter SetMenu Id";
-            String errorMsg = "SetMenu is invalid!";
-            String regex = Acceptable.anything;
-            setMenuId = input(message, errorMsg, regex);
-            setMenu = setMenus.searchById(setMenuId);
-            reInput = (setMenu == null);
-            if (reInput) {
+            setMenuId = input(setMenuMessage, "SetMenu is invalid!", Acceptable.anything).trim();
+
+            // Nếu update và không nhập gì, giữ giá trị cũ
+            if (isUpdated && setMenuId.isEmpty()) {
+                setMenuId = existingOrder.getMenuId();
+                break;
+            }
+
+            if (setMenus.searchById(setMenuId) == null) {
                 System.out.println("SetMenu is not in the list of SetMenus. Please re input!");
             }
-        } while (reInput);
+        } while (setMenus.searchById(setMenuId) == null);
 
-        // ---- 
+        // Xử lý Number of Tables
         int numberOfTables = 0;
-        String msg = "Enter number of tables:";
-        String errorMsg = "Number of tables must be greater than zero!";
-        if (isUpdated) {
-            String regex = Acceptable.anything;
-            String s_numberOfTables = input(msg, errorMsg, regex).toUpperCase();
-            if(s_numberOfTables.length()==0){
-                numberOfTables = oTemp.getNumberOfTables();
-            }else{
-                numberOfTables = Integer.parseInt(s_numberOfTables);
+        String tableMessage = isUpdated
+                ? "Enter number of tables (Press Enter to keep current: " + existingOrder.getNumberOfTables() + "):"
+                : "Enter number of tables:";
+        String tableErrorMsg = "Number of tables must be greater than zero!";
+
+        while (true) {
+            try {
+                String tableInput = input(tableMessage, tableErrorMsg, Acceptable.anything).trim();
+
+                // Nếu update và không nhập gì, giữ giá trị cũ
+                if (isUpdated && tableInput.isEmpty()) {
+                    numberOfTables = existingOrder.getNumberOfTables();
+                    break;
+                }
+
+                numberOfTables = Integer.parseInt(tableInput);
+                if (numberOfTables > 0) {
+                    break;
+                } else {
+                    System.out.println(tableErrorMsg);
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid number format! Please enter a valid positive integer.");
             }
-        } else {
-            String regex = Acceptable.positive_integer;
-            numberOfTables = Integer.parseInt(input(msg, errorMsg, regex).toUpperCase());
         }
 
-        // ---
+        // Xử lý Event Date
         Date eventDate = null;
-        boolean checkEventDate = false;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String dateMessage = isUpdated
+                ? "Enter preferred event date (dd/MM/yyyy) (Press Enter to keep current: " + sdf.format(existingOrder.getEventDate()) + "):"
+                : "Enter preferred event date (dd/MM/yyyy):";
+
+        Date today = new Date();
+        boolean validDate = false;
+
         do {
             try {
-                System.out.println("Enter preferred event date:");
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                System.out.println(dateMessage);
                 String inputDate = scanner.nextLine().trim();
-                eventDate = sdf.parse(inputDate);
-                Date today = new Date();
-                if (eventDate.after(today)) {
-                    checkEventDate = true;
+
+                // Nếu update và không nhập gì, giữ giá trị cũ
+                if (isUpdated && inputDate.isEmpty()) {
+                    eventDate = existingOrder.getEventDate();
+                    validDate = true;
                 } else {
-                    System.out.println("Error: Event date must be in the future.");
+                    eventDate = sdf.parse(inputDate);
+                    if (eventDate.after(today)) {
+                        validDate = true;
+                    } else {
+                        System.out.println("Error: Event date must be in the future.");
+                    }
                 }
             } catch (Exception e) {
+                System.out.println("Invalid date format! Please use dd/MM/yyyy format.");
             }
-        } while (!checkEventDate);
+        } while (!validDate);
 
-        // Tao don hang moi
-        Order order = new Order(orderId, customerCode, setMenuId, numberOfTables, eventDate);
-
-        return order;
+        return new Order(orderId, customerCode, setMenuId, numberOfTables, eventDate);
     }
 
     public String generateOrderId() {
