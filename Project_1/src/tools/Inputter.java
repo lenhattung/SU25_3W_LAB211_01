@@ -71,20 +71,39 @@ public class Inputter {
         return customer;
     }
 
-    public Order inputOrder(Customers customers, SetMenus setMenus, Orders orders) {
-        // Input customerCode
-        String customerCode = "";
+    public Order inputOrder(boolean isUpdated, Customers customers, SetMenus setMenus, Orders orders) {
+        String orderId = generateOrderId();
         boolean reInput = false;
-        do {
-            String message = "Enter Customer code\n (A unique 5-character string. The first character is \"C\", \"G\"or \"K\", followed by 4 digits.)";
-            String errorMsg = "Customer code cannot be empty! Customer code must start with C, G, K, followed by 4 digits!";
-            String regex = Acceptable.customerCodeRegex;
-            customerCode = input(message, errorMsg, regex);
-            reInput = (customers.searchById(customerCode) == null);
-            if (reInput) {
-                System.out.println("Customer is not in the list of Customers. Please re input!");
+        Order oTemp = null;
+        if (isUpdated) {
+            String message = "Enter Order Id: ";
+            String errorMsg = "Order Id is invalid!";
+            String regex = Acceptable.anything;
+            orderId = input(message, errorMsg, regex);
+            oTemp = orders.searchById(orderId);
+            if (oTemp == null) {
+                System.out.println("This order does not exist!");
+                return null;
             }
-        } while (reInput);
+        }
+
+        String customerCode = "";
+        if (isUpdated) {
+            customerCode = oTemp.getCustomerCode();
+        } else {
+            // Input customerCode
+            reInput = false;
+            do {
+                String message = "Enter Customer code\n (A unique 5-character string. The first character is \"C\", \"G\"or \"K\", followed by 4 digits.)";
+                String errorMsg = "Customer code cannot be empty! Customer code must start with C, G, K, followed by 4 digits!";
+                String regex = Acceptable.customerCodeRegex;
+                customerCode = input(message, errorMsg, regex);
+                reInput = (customers.searchById(customerCode) == null);
+                if (reInput) {
+                    System.out.println("Customer is not in the list of Customers. Please re input!");
+                }
+            } while (reInput);
+        }
 
         // Input SetMenu
         String setMenuId = "";
@@ -106,11 +125,20 @@ public class Inputter {
         int numberOfTables = 0;
         String msg = "Enter number of tables:";
         String errorMsg = "Number of tables must be greater than zero!";
-        String regex = Acceptable.positive_integer;
-        numberOfTables = Integer.parseInt(input(msg, errorMsg, regex).toUpperCase());
+        if (isUpdated) {
+            String regex = Acceptable.anything;
+            String s_numberOfTables = input(msg, errorMsg, regex).toUpperCase();
+            if(s_numberOfTables.length()==0){
+                numberOfTables = oTemp.getNumberOfTables();
+            }else{
+                numberOfTables = Integer.parseInt(s_numberOfTables);
+            }
+        } else {
+            String regex = Acceptable.positive_integer;
+            numberOfTables = Integer.parseInt(input(msg, errorMsg, regex).toUpperCase());
+        }
 
-        
-         // ---
+        // ---
         Date eventDate = null;
         boolean checkEventDate = false;
         do {
@@ -128,14 +156,14 @@ public class Inputter {
             } catch (Exception e) {
             }
         } while (!checkEventDate);
-        
+
         // Tao don hang moi
-        Order order = new Order(generateOrderId(), customerCode, setMenuId, numberOfTables, eventDate);
-        
+        Order order = new Order(orderId, customerCode, setMenuId, numberOfTables, eventDate);
+
         return order;
     }
-    
-    public String generateOrderId(){
+
+    public String generateOrderId() {
         Date date = new Date();
         //return ""+(date.getYear()+1900)+(date.getMonth()+1)+(date.getDate())+(date.getHours())+(date.getMinutes())+(date.getSeconds());
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");

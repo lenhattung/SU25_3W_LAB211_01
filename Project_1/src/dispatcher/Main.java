@@ -127,13 +127,29 @@ public class Main {
     }
 
     private static void handleOrderPlacement() {
-        Order o = inputter.inputOrder(customers, setMenus, orders);
+        Order o = inputter.inputOrder(false, customers, setMenus, orders);
         if (orders.isDupplicated(o)) {
             System.out.println("Dupplicate data!");
         } else {
             orders.addNew(o);
             o.display(customers, setMenus);
         }
+    }
+
+    private static void handleOrderUpdating() {
+        int option = 0;
+        do {
+            Order o = inputter.inputOrder(true, customers, setMenus, orders);
+            if (o != null) {
+                orders.update(o);
+                o.display(customers, setMenus);
+                System.out.println("Update successfull!");
+            }
+            System.out.println("1. Continue edit orders");
+            System.out.println("2. Return to the main menu");
+            System.out.println("Enter your option: ");
+            option = Integer.parseInt(scanner.nextLine());
+        } while (option != RETURN_TO_MAIN);
     }
 
     private static void processMenuChoice(int testCase) {
@@ -154,7 +170,7 @@ public class Main {
                 handleOrderPlacement();
                 break;
             case UPDATE_ORDER:
-                // handleOrderUpdating();
+                handleOrderUpdating();
                 break;
             case SAVE_DATA:
                 //handleDataSaving();

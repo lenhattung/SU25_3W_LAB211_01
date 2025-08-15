@@ -26,15 +26,24 @@ public class Orders extends ArrayList<Order> implements Workable<Order> {
             System.out.println("Dupplicate data!");
         }else{
             this.add(t);
+            this.saved=false;
         }
     }
 
     @Override
     public void update(Order t) {
+        this.remove(t);
+        this.add(t);
+        this.saved=false;
     }
 
     @Override
     public Order searchById(String s) {
+        for (Order o : this) {
+            if (o.getOrderId().equals(s)){
+                return o;
+            }
+        }
         return null;
     }
 
