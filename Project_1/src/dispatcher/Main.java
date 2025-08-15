@@ -152,6 +152,12 @@ public class Main {
         } while (option != RETURN_TO_MAIN);
     }
 
+    private static void handleDataSaving() {
+        customers.saveToFile();
+        orders.saveToFile();
+        System.out.println("The data is successfully saved!");
+    }
+
     private static void processMenuChoice(int testCase) {
         switch (testCase) {
             case REGISTER_CUSTOMERS:
@@ -173,7 +179,7 @@ public class Main {
                 handleOrderUpdating();
                 break;
             case SAVE_DATA:
-                //handleDataSaving();
+                handleDataSaving();
                 break;
             case DISPLAY_ALL:
                 //handleDisplayAll();
