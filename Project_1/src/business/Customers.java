@@ -1,7 +1,9 @@
 package business;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import models.Customer;
@@ -26,6 +28,13 @@ public class Customers extends HashSet<Customer> implements Workable<Customer>, 
     public Customers(String pathFile) {
         this.pathFile = pathFile;
         this.saved = true;
+        init();
+    }
+
+    private void init() {
+        HashSet<Customer> result = readFromFile();
+        this.clear();
+        this.addAll(result);
     }
 
     public boolean isDuplicated(Customer c) {
@@ -118,4 +127,31 @@ public class Customers extends HashSet<Customer> implements Workable<Customer>, 
             e.printStackTrace();
         }
     }
+
+    public HashSet<Customer> readFromFile() {
+        HashSet<Customer> result = new HashSet<>();
+        try {
+            // B1. Tao file moi
+            File f = new File(pathFile);
+            if (!f.exists()) {
+                return result;
+            }
+
+            // B2. Tao FileInputStream
+            FileInputStream fis = new FileInputStream(f);
+
+            // B3. Tao ObjectOutputStream
+            ObjectInputStream ois = new ObjectInputStream(fis);
+
+            // B4. Ghi file
+            result = (Customers) ois.readObject();
+
+            // B5. Dong cac object
+            ois.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 }

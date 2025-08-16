@@ -7,6 +7,8 @@ package dispatcher;
 import business.Customers;
 import business.Orders;
 import business.SetMenus;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
@@ -158,6 +160,22 @@ public class Main {
         System.out.println("The data is successfully saved!");
     }
 
+    private static void handleDisplayAll() {
+        HashSet<Customer> c = customers.readFromFile();
+        ArrayList<Order> o = orders.readFromFile();
+        if (c.size() > 0) {
+            customers.show(c);
+        } else {
+            System.out.println("No customers data!");
+        }
+
+        if (o.size() > 0) {
+            orders.show(o);
+        } else {
+            System.out.println("No orders data!");
+        }
+    }
+
     private static void processMenuChoice(int testCase) {
         switch (testCase) {
             case REGISTER_CUSTOMERS:
@@ -182,7 +200,7 @@ public class Main {
                 handleDataSaving();
                 break;
             case DISPLAY_ALL:
-                //handleDisplayAll();
+                handleDisplayAll();
                 break;
             case EXIT:
                 //handleExit();

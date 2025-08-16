@@ -104,6 +104,7 @@ public class Inputter {
         String setMenuMessage = isUpdated
                 ? "Enter SetMenu Id (Press Enter to keep current: " + existingOrder.getMenuId() + "):"
                 : "Enter SetMenu Id:";
+        SetMenu setMenu = null;
         do {
             setMenuId = input(setMenuMessage, "SetMenu is invalid!", Acceptable.anything).trim();
 
@@ -112,11 +113,14 @@ public class Inputter {
                 setMenuId = existingOrder.getMenuId();
                 break;
             }
-
-            if (setMenus.searchById(setMenuId) == null) {
+            
+            setMenu = setMenus.searchById(setMenuId);
+            if (setMenu == null) {
                 System.out.println("SetMenu is not in the list of SetMenus. Please re input!");
             }
-        } while (setMenus.searchById(setMenuId) == null);
+        } while (setMenu == null);
+        // Lay gia tien tu menu da chon
+        double price = setMenu.getPrice();
 
         // Xử lý Number of Tables
         int numberOfTables = 0;
@@ -178,7 +182,7 @@ public class Inputter {
             }
         } while (!validDate);
 
-        return new Order(orderId, customerCode, setMenuId, numberOfTables, eventDate);
+        return new Order(orderId, customerCode, setMenuId, numberOfTables, eventDate, price);
     }
 
     public String generateOrderId() {

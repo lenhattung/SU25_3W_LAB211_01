@@ -21,17 +21,21 @@ public class Order implements Serializable {
     private String menuId;
     private int numberOfTables;
     private Date eventDate;
+    private double price;
 
     public Order() {
     }
 
-    public Order(String orderId, String customerCode, String menuId, int numberOfTables, Date eventDate) {
+    public Order(String orderId, String customerCode, String menuId, int numberOfTables, Date eventDate, double price) {
         this.orderId = orderId;
         this.customerCode = customerCode;
         this.menuId = menuId;
         this.numberOfTables = numberOfTables;
         this.eventDate = eventDate;
+        this.price = price;
     }
+
+  
 
     public String getOrderId() {
         return orderId;
@@ -72,6 +76,16 @@ public class Order implements Serializable {
     public void setEventDate(Date eventDate) {
         this.eventDate = eventDate;
     }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+    
+    
 
     @Override
     public String toString() {
@@ -117,8 +131,8 @@ public class Order implements Serializable {
         System.out.format("%-20s: %s\n", "Set menu name", s.getMenuName());
         System.out.format("%-20s: %s\n", "Event date", this.getEventDate());
         System.out.format("%-20s: %s\n", "Number of tables", this.getNumberOfTables());
-        System.out.format("%-20s: %s\n", "Price", s.getPrice());
+        System.out.format("%-20s: %s\n", "Price", this.getPrice());
         System.out.println("-----------------------------");
-        System.out.format("%-15s:%s\n", "Total cost: ", this.getNumberOfTables() * s.getPrice() + " VND");
+        System.out.format("%-15s:%s\n", "Total cost: ", this.getNumberOfTables() * this.getPrice() + " VND");
     }
 }

@@ -366,7 +366,7 @@
 <XPD:ATTR name="Left" type="integer">936</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">656</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">262</XPD:ATTR>
-<XPD:ATTR name="Height" type="integer">251</XPD:ATTR>
+<XPD:ATTR name="Height" type="integer">273</XPD:ATTR>
 <XPD:REF name="Model">hxEhDqSnLUOobrRiwZO28AAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="2thvxAsyeEq+4QQoYmDvsgAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="xaF0A73PMk2XW0c2oi9JCAAA">
@@ -429,7 +429,7 @@
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
 <XPD:ATTR name="FontFace" type="string">Courier New</XPD:ATTR>
 <XPD:ATTR name="FontSize" type="integer">15</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">1087,588;1080,656</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">1088,588;1081,656</XPD:ATTR>
 <XPD:REF name="Model">qSGFVk8dP02H4NQpypZnuwAA</XPD:REF>
 <XPD:REF name="Head">NfxbM57mwEO3dE2CXfnjzQAA</XPD:REF>
 <XPD:REF name="Tail">jWJCmrwyIEW9+DsDnl9u/wAA</XPD:REF>
@@ -1247,7 +1247,7 @@
 <XPD:ATTR name="#Associations" type="integer">2</XPD:ATTR>
 <XPD:REF name="Associations[0]">mm7Soa8YiU6FKSoyNvPnuAAA</XPD:REF>
 <XPD:REF name="Associations[1]">IRRdgsBDm0W/yN1mO+yDYAAA</XPD:REF>
-<XPD:ATTR name="#Attributes" type="integer">5</XPD:ATTR>
+<XPD:ATTR name="#Attributes" type="integer">6</XPD:ATTR>
 <XPD:OBJ name="Attributes[0]" type="UMLAttribute" guid="IyITeC1lUkqr6zCMEMuvfAAA">
 <XPD:ATTR name="Name" type="string">orderId</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
@@ -1276,6 +1276,12 @@
 <XPD:ATTR name="Name" type="string">event</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">Date</XPD:ATTR>
+<XPD:REF name="Owner">hxEhDqSnLUOobrRiwZO28AAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="Attributes[5]" type="UMLAttribute" guid="HSUSPSY9aUC09EKZ36JOTwAA">
+<XPD:ATTR name="Name" type="string">price</XPD:ATTR>
+<XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">double</XPD:ATTR>
 <XPD:REF name="Owner">hxEhDqSnLUOobrRiwZO28AAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>

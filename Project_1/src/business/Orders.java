@@ -1,10 +1,17 @@
 package business;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.SimpleDateFormat;
 import models.Order;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import models.Customer;
+import models.SetMenu;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -21,6 +28,14 @@ public class Orders extends ArrayList<Order> implements Workable<Order> {
 
     public Orders(String pathFile) {
         this.pathFile = pathFile;
+        this.saved = true;
+        init();
+    }
+
+    private void init() {
+        ArrayList<Order> result = readFromFile();
+        this.clear();
+        this.addAll(result);
     }
 
     @Override
@@ -48,6 +63,17 @@ public class Orders extends ArrayList<Order> implements Workable<Order> {
             }
         }
         return null;
+    }
+
+    public void show(ArrayList<Order> list) {
+        SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+        System.out.println("-------------------------------------------------------------");
+        System.out.format("%-10s | %-10s | %-10s | %-10s | %-10s | %-10s | %-10s%n  ", "ID", "Event Date", "Customer ID", "Set Menu", "Price", "Tables", "Cost");
+        System.out.println("-------------------------------------------------------------");
+        for (Order o : list) {
+            System.out.format("%-10s | %-10s | %-10s | %-10s | %-10s | %-10s | %-10s%n  ", o.getOrderId() , formatter.format(o.getEventDate()),o.getCustomerCode(),o.getMenuId(), o.getPrice(), o.getNumberOfTables(), o.getPrice()*o.getPrice());
+        }
+        System.out.println("-------------------------------------------------------------");
     }
 
     @Override
@@ -91,11 +117,38 @@ public class Orders extends ArrayList<Order> implements Workable<Order> {
 
             // B5. Dong cac object
             oos.close();
-            
+
             // B6. Thay doi trang thai cua saved
             this.saved = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    public ArrayList<Order> readFromFile() {
+        ArrayList<Order> result = new ArrayList<Order>();
+        try {
+            // B1. Tao file moi
+            File f = new File(pathFile);
+            if (!f.exists()) {
+                return result;
+            }
+
+            // B2. Tao FileInputStream
+            FileInputStream fis = new FileInputStream(f);
+
+            // B3. Tao ObjectOutputStream
+            ObjectInputStream ois = new ObjectInputStream(fis);
+
+            // B4. Ghi file
+            result = (Orders) ois.readObject();
+
+            // B5. Dong cac object
+            ois.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 }
